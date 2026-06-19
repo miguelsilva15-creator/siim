@@ -1,29 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Alerta de Área Inadequada</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #ffcccc;
-            font-family: Arial, sans-serif;
-        }
-        h1 {
-            color: #cc0000;
-            font-size: 4em;
-        }
-        .emoji {
-            font-size: 5em;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Monitoramento de Área</title>
+  
+  <!-- Scripts do Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 120px;
+      background: #f5f5f5;
+    }
+    #emoji {
+      font-size: 120px;
+    }
+    #texto {
+      font-size: 40px;
+      font-weight: bold;
+    }
+  </style>
 </head>
+
 <body>
-    <div>
-        <h1 class="emoji">🚨</h1>
-        <h1>Você está na área inadequada!</h1>
-    </div>
+  <div id="emoji">⌛</div>
+  <div id="texto">Aguardando dados...</div>
+  
+  <script>
+    // Configuração do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyDzO321Lz44xd5fBFyh37enqtpaO4FFb4o",
+      databaseURL: "https://siim-dc240-default-rtdb.firebaseio.com"
+    };
+
+    // Inicializa o Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Referência ao nó "status" no banco
+    const statusRef = firebase.database().ref("status");
+
+    // Escuta as mudanças no valor
+    statusRef.on("value", (snapshot) => {
+      const valor = snapshot.val();
+      if (valor === "0") {
+        document.getElementById("emoji").innerHTML = "✅";
+        document.getElementById("texto").innerHTML = "VOCÊ ESTÁ NA ÁREA ADEQUADA";
+      } else if (valor === "1") {
+        document.getElementById("emoji").innerHTML = "🚨";
+        document.getElementById("texto").innerHTML = "ALERTA: ÁREA INADEQUADA";
+      }
+    });
+  </script>
 </body>
+
 </html>
