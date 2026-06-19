@@ -4,9 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Monitoramento de Área</title>
+
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
 <style>
+
 body{
 margin:0;
 padding:0;
@@ -18,99 +21,107 @@ align-items:center;
 height:100vh;
 flex-direction:column;
 }
+
 #emoji{
 font-size:120px;
 margin-bottom:20px;
 }
+
 #texto{
 font-size:35px;
 font-weight:bold;
 padding:20px;
 border-radius:15px;
 }
+
 .adequada{
 background:#d8ffd8;
 color:green;
 }
+
 .inadequada{
 background:#ffd8d8;
 color:red;
 }
+
 .aguardando{
 background:#eeeeee;
 color:#555;
 }
+
 </style>
 </head>
+
 <body>
+
 <div id="emoji">⌛</div>
+
 <div id="texto" class="aguardando">
 AGUARDANDO DADOS...
 </div>
+
 <script>
+
 const firebaseConfig={
- apiKey: "AIzaSyDzO321Lz44xd5fBFyh37enqtpaO4FFb4o",
-  authDomain: "siim-dc240.firebaseapp.com",
-  databaseURL: "https://siim-dc240-default-rtdb.firebaseio.com",
-  projectId: "siim-dc240",
-  storageBucket: "siim-dc240.firebasestorage.app",
-  messagingSenderId: "787094498005",
-  appId: "1:787094498005:web:e0111e99c59e6c178d105c",
-  measurementId: "G-DW8WW9RWTP"
+
+apiKey:"SUA_API_KEY",
+authDomain:"siim-dc240.firebaseapp.com",
+databaseURL:"https://siim-dc240-default-rtdb.firebaseio.com",
+projectId:"siim-dc240",
+storageBucket:"siim-dc240.appspot.com",
+messagingSenderId:"787094498005",
+appId:"1:787094498005:web:e0111e99c59e6c178d105c"
+
 };
+
 firebase.initializeApp(firebaseConfig);
-const statusRef=
+
+const statusRef =
 firebase.database().ref("status");
+
 statusRef.on("value",(snapshot)=>{
-const valor=
-String(snapshot.val());
-let emoji=
-document.getElementById("emoji");
-let texto=
-document.getElementById("texto");
+
+const valor=String(snapshot.val());
+
+let emoji=document.getElementById("emoji");
+let texto=document.getElementById("texto");
+
 if(valor=="0"){
+
 emoji.innerHTML="✅";
+
 texto.innerHTML=
 "O OPERADOR ESTÁ NA ÁREA ADEQUADA";
-texto.className=
-"adequada";
+
+texto.className="adequada";
+
 }
+
 else if(valor=="1"){
+
 emoji.innerHTML="🚨";
+
 texto.innerHTML=
 "ALERTA: ÁREA INADEQUADA";
-texto.className=
-"inadequada";
+
+texto.className="inadequada";
+
 }
+
 else{
+
 emoji.innerHTML="⌛";
+
 texto.innerHTML=
 "AGUARDANDO DADOS...";
-texto.className=
-"aguardando";
+
+texto.className="aguardando";
+
 }
+
 });
+
 </script>
+
 </body>
-</html>
-    // Inicializa o Firebase
-    firebase.initializeApp(firebaseConfig);
-
-    // Referência ao nó "status" no banco
-    const statusRef = firebase.database().ref("status");
-
-    // Escuta as mudanças no valor
-    statusRef.on("value", (snapshot) => {
-      const valor = snapshot.val();
-      if (valor === "0") {
-        document.getElementById("emoji").innerHTML = "✅";
-        document.getElementById("texto").innerHTML = "VOCÊ ESTÁ NA ÁREA ADEQUADA";
-      } else if (valor === "1") {
-        document.getElementById("emoji").innerHTML = "🚨";
-        document.getElementById("texto").innerHTML = "ALERTA: ÁREA INADEQUADA";
-      }
-    });
-  </script>
-</body>
-
 </html>
